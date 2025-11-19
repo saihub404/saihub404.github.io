@@ -23,7 +23,15 @@ import {
   ArrowUpRight,
   Copy,
   Check,
-  FileText
+  FileText,
+  Server,
+  GitBranch,
+  Box,
+  Activity,
+  Search,
+  Split,
+  RefreshCw,
+  Layers
 } from 'lucide-react';
 
 // --- API Configuration ---
@@ -72,15 +80,31 @@ const PROFILE = {
   linkedin: "https://linkedin.com/in/saiganesh223468/"
 };
 
-const SKILLS = [
-  { category: "Languages", name: "Python", value: 90, icon: Code },
-  { category: "Languages", name: "SQL", value: 95, icon: Database },
-  { category: "Languages", name: "R", value: 80, icon: Terminal },
-  { category: "Visualization", name: "Tableau", value: 90, icon: BarChart3 },
-  { category: "Visualization", name: "Power BI", value: 85, icon: BarChart3 },
-  { category: "Cloud", name: "AWS & GCP", value: 75, icon: Cloud },
-  { category: "Analysis", name: "Machine Learning", value: 85, icon: Brain },
-  { category: "Analysis", name: "Predictive Modeling", value: 88, icon: Brain },
+// Expanded Skills List from Resume for the Marquee
+const SKILLS_ROW_1 = [
+  { name: "Python", icon: Code },
+  { name: "SQL", icon: Database },
+  { name: "R", icon: Terminal },
+  { name: "Tableau", icon: BarChart3 },
+  { name: "Power BI", icon: BarChart3 },
+  { name: "Machine Learning", icon: Brain },
+  { name: "AWS", icon: Cloud },
+  { name: "GCP", icon: Cloud },
+  { name: "Snowflake", icon: Database },
+  { name: "Splunk", icon: Activity },
+];
+
+const SKILLS_ROW_2 = [
+  { name: "Predictive Modeling", icon: Brain },
+  { name: "Data Mining", icon: Search },
+  { name: "A/B Testing", icon: Split },
+  { name: "Looker", icon: BarChart3 },
+  { name: "Excel", icon: FileText },
+  { name: "MongoDB", icon: Database },
+  { name: "PostgreSQL", icon: Server },
+  { name: "Docker", icon: Box },
+  { name: "Git", icon: GitBranch },
+  { name: "CI/CD", icon: RefreshCw },
 ];
 
 const PROJECTS = [
@@ -209,44 +233,27 @@ const TypewriterEffect = ({ words, prefix }) => {
   );
 };
 
-// Custom Interactive Chart Component
-const SkillChart = ({ skills }) => {
-  const [hoveredSkill, setHoveredSkill] = useState(null);
+// --- New Multi-Row Infinite Scrolling Skills ---
+const MarqueeRow = ({ items, direction = "left", speed = "normal" }) => {
+  // Duplicate items enough times to fill screen and ensure smooth loop
+  const duplicatedItems = [...items, ...items, ...items, ...items];
+
+  const animationClass = direction === "left" ? "animate-scroll-left" : "animate-scroll-right";
+  const durationClass = speed === "slow" ? "duration-[60s]" : "duration-[40s]";
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6 bg-zinc-900/80 rounded-xl border border-amber-500/20 backdrop-blur-sm shadow-2xl">
-      <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-        <BarChart3 className="w-5 h-5 text-amber-400" />
-        Technical Proficiency
-      </h3>
-      <div className="space-y-4">
-        {skills.map((skill, index) => (
+    <div className="flex w-full overflow-hidden py-3 group">
+      <div
+        className={`flex gap-6 ${animationClass} group-hover:[animation-play-state:paused] w-max`}
+        style={{ animationDuration: speed === "slow" ? "60s" : "40s" }}
+      >
+        {duplicatedItems.map((skill, index) => (
           <div
-            key={skill.name}
-            className="relative group"
-            onMouseEnter={() => setHoveredSkill(index)}
-            onMouseLeave={() => setHoveredSkill(null)}
+            key={`${skill.name}-${index}`}
+            className="flex items-center gap-2 px-5 py-2.5 bg-zinc-900/80 border border-zinc-800/60 rounded-full shadow-sm hover:border-amber-500/40 hover:shadow-[0_0_15px_rgba(245,158,11,0.1)] transition-all cursor-default backdrop-blur-md whitespace-nowrap"
           >
-            <div className="flex justify-between text-sm mb-1 text-zinc-300">
-              <span className="font-medium flex items-center gap-2">
-                <skill.icon className="w-4 h-4 text-zinc-500 group-hover:text-amber-400 transition-colors" />
-                {skill.name}
-              </span>
-              <span className="text-amber-400 font-mono font-bold">{skill.value}%</span>
-            </div>
-            <div className="h-3 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700">
-              <div
-                className={`h-full bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-200 transition-all duration-1000 ease-out relative shadow-[0_0_15px_rgba(251,191,36,0.4)]`}
-                style={{ width: `${skill.value}%` }}
-              >
-                {/* Shimmer effect */}
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
-              </div>
-            </div>
-
-            <div className={`absolute left-0 -top-8 bg-black text-xs text-amber-400 px-3 py-1 rounded border border-amber-500/30 transition-opacity duration-200 pointer-events-none ${hoveredSkill === index ? 'opacity-100' : 'opacity-0'}`}>
-              {skill.category}
-            </div>
+            <skill.icon className="w-4 h-4 text-amber-500" />
+            <span className="text-sm font-semibold text-zinc-300 tracking-wide">{skill.name}</span>
           </div>
         ))}
       </div>
@@ -400,7 +407,7 @@ const AIChatWidget = () => {
       Your goal is to answer questions about Sai's professional background professionally and concisely.
       Here is Sai's data:
       Bio: ${PROFILE.bio}
-      Skills: ${SKILLS.map(s => s.name).join(', ')}
+      Skills: ${SKILLS_ROW_1.map(s => s.name).join(', ')} ${SKILLS_ROW_2.map(s => s.name).join(', ')}
       Projects: ${JSON.stringify(PROJECTS)}
       Experience: ${JSON.stringify(EXPERIENCES)}
       Tone: Professional, confident, helpful, and slightly enthusiastic.
@@ -621,22 +628,26 @@ export default function App() {
           <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center text-center">
 
             {/* Creative Center Animation - Reduced size slightly to give more prominence to text */}
-            <div className="relative w-48 h-48 mb-12 flex items-center justify-center">
+            <div className="relative w-64 h-64 md:w-96 md:h-96 mb-12 flex items-center justify-center">
               {/* Outer Expanding Rings */}
               <div className="absolute inset-0 border border-zinc-800/50 rounded-full animate-[ping_3s_linear_infinite]" />
-              <div className="absolute inset-4 border border-zinc-800/50 rounded-full animate-[ping_3s_linear_infinite_1s]" />
+              <div className="absolute inset-8 border border-zinc-800/50 rounded-full animate-[ping_3s_linear_infinite_1.5s]" />
 
               {/* Rotating Tech Ring */}
-              <div className="absolute inset-0 border-2 border-zinc-800 rounded-full border-t-amber-500 border-r-transparent rotate-45 animate-[spin_4s_linear_infinite]" />
-              <div className="absolute inset-8 border-2 border-zinc-800 rounded-full border-b-amber-500 border-l-transparent -rotate-12 animate-[spin_5s_linear_infinite_reverse]" />
+              <div className="absolute inset-0 border-2 border-zinc-800 rounded-full border-t-amber-500 border-r-transparent rotate-45 animate-[spin_6s_linear_infinite]" />
+              <div className="absolute inset-12 border-2 border-zinc-800 rounded-full border-b-amber-500 border-l-transparent -rotate-12 animate-[spin_8s_linear_infinite_reverse]" />
+
+              {/* Inner Dashed Ring */}
+              <div className="absolute inset-24 border border-dashed border-zinc-600 rounded-full animate-[spin_20s_linear_infinite]" />
 
               {/* Center Core: Morphing Neural Shape */}
-              <div className="relative w-20 h-20 bg-black rounded-xl border border-amber-500/30 flex items-center justify-center overflow-hidden shadow-[0_0_30px_rgba(245,158,11,0.2)] animate-[float_6s_ease-in-out_infinite]">
+              <div className="relative w-32 h-32 bg-black rounded-xl border border-amber-500/30 flex items-center justify-center overflow-hidden shadow-[0_0_40px_rgba(245,158,11,0.3)] animate-[float_5s_ease-in-out_infinite]">
                 <div className="absolute inset-0 bg-amber-500/10 backdrop-blur-md" />
                 {/* Sacred Geometry / Tech Core */}
-                <div className="w-10 h-10 border border-amber-400 rotate-45 absolute animate-[spin_10s_linear_infinite]" />
-                <div className="w-10 h-10 border border-amber-400 rotate-12 absolute animate-[spin_10s_linear_infinite_reverse]" />
-                <div className="w-3 h-3 bg-amber-400 rounded-sm shadow-[0_0_15px_rgba(245,158,11,0.8)] animate-pulse" />
+                <div className="w-20 h-20 border border-amber-400 rotate-45 absolute animate-[spin_10s_linear_infinite]" />
+                <div className="w-20 h-20 border border-amber-400 rotate-12 absolute animate-[spin_10s_linear_infinite_reverse]" />
+                {/* Center Dot */}
+                <div className="w-4 h-4 bg-amber-400 rounded-full shadow-[0_0_20px_rgba(245,158,11,1)] animate-pulse" />
               </div>
             </div>
 
@@ -658,14 +669,6 @@ export default function App() {
                   Strategic Decisions.
                 </span>
               </h1>
-
-              {/* Aesthetic Bio Box - Glassmorphism */}
-              <div className="max-w-3xl mx-auto mt-8 p-6 md:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-sm relative overflow-hidden group hover:border-amber-500/20 transition-colors duration-500">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
-                <p className="text-lg md:text-xl text-zinc-300 leading-relaxed font-light">
-                  {PROFILE.bio}
-                </p>
-              </div>
 
               {/* Call to Action & Resume Button - CHANGED TO <a> TAG */}
               <div className="flex justify-center gap-6 pt-8">
@@ -694,42 +697,31 @@ export default function App() {
         </section>
 
         {/* Skills Section */}
-        <section id="skills" className="py-24 bg-zinc-950 border-y border-zinc-900">
+        <section id="skills" className="py-12 bg-zinc-950 border-y border-zinc-900">
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">My Tech Stack</h2>
-              <p className="text-zinc-400 max-w-xl mx-auto">
-                A comprehensive overview of the tools and languages I use to extract insights from chaos.
-              </p>
+              <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">My Technical Foundation</h2>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-6">The Analyst's Toolkit</h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  I believe in choosing the right tool for the job. Whether it's rigorous statistical modeling in Python, quick ad-hoc queries in SQL, or executive-level dashboards in Tableau.
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: "Data Cleaning", val: "Python/SQL" },
-                    { label: "Visualization", val: "Tableau/BI" },
-                    { label: "Database", val: "PostgreSQL" },
-                    { label: "ML Models", val: "Sklearn" },
-                  ].map((item) => (
-                    <div key={item.label} className="bg-zinc-900 p-4 rounded-lg border border-zinc-800 hover:border-amber-500/30 transition-colors">
-                      <div className="text-[10px] text-zinc-500 uppercase mb-1 tracking-widest">{item.label}</div>
-                      <div className="font-bold text-amber-400 text-lg">{item.val}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <SkillChart skills={SKILLS} />
+            {/* New Multi-Row Marquee Skills - Imitating Reference Style */}
+            <div className="flex flex-col gap-6 relative">
+
+              {/* Side Fade Gradients */}
+              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
+
+              {/* Row 1 - Scroll Left */}
+              <MarqueeRow items={SKILLS_ROW_1} direction="left" speed="normal" />
+
+              {/* Row 2 - Scroll Right */}
+              <MarqueeRow items={SKILLS_ROW_2} direction="right" speed="slow" />
+
             </div>
           </div>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="py-24 relative bg-black">
+        <section id="projects" className="py-12 relative bg-black">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
               <div>
@@ -762,9 +754,9 @@ export default function App() {
         </section>
 
         {/* Experience Section */}
-        <section id="experience" className="py-24 bg-zinc-950 border-y border-zinc-900">
-          <div className="max-w-4xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center tracking-tight">Work History</h2>
+        <section id="experience" className="py-12 bg-zinc-950 border-y border-zinc-900">
+          <div className="max-w-6xl mx-auto px-6">
+            <h2 className="text-3xl font-bold text-white mb-8 tracking-tight">Work History</h2>
             <div className="relative border-l border-zinc-800 ml-3 sm:ml-0 sm:border-none">
               {EXPERIENCES.map((exp, index) => (
                 <TimelineItem key={index} exp={exp} isLast={index === EXPERIENCES.length - 1} />
@@ -774,7 +766,7 @@ export default function App() {
         </section>
 
         {/* Redesigned Creative Contact Section */}
-        <section id="contact" className="relative py-32 overflow-hidden bg-zinc-950">
+        <section id="contact" className="relative py-20 overflow-hidden bg-zinc-950">
           {/* Background Grid Effect */}
           <div className="absolute inset-0 opacity-10 pointer-events-none"
             style={{ backgroundImage: 'linear-gradient(to right, #333 1px, transparent 1px), linear-gradient(to bottom, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }}
@@ -843,6 +835,23 @@ export default function App() {
       <AIChatWidget />
 
       <style>{`
+        /* SMOOTH INFINITE SCROLL ANIMATIONS */
+        @keyframes scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); } /* Moves exactly half, assuming list is doubled */
+        }
+        @keyframes scroll-right {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        
+        .animate-scroll-left {
+          animation: scroll-left linear infinite;
+        }
+        .animate-scroll-right {
+          animation: scroll-right linear infinite;
+        }
+
         @keyframes shimmer {
           100% { transform: translateX(100%); }
         }

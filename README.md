@@ -1,16 +1,79 @@
-# React + Vite
+# Creative Data Analyst Portfolio ✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio website designed for a Data Analyst & Scientist. Built with **React**, **Tailwind CSS**, and **Vite**, featuring AI-powered interactions using the **Google Gemini API**.
 
-Currently, two official plugins are available:
+[**🚀 Live Demo**](https://saihub404.github.io)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Portfolio Status](https://img.shields.io/badge/Status-Live-success) ![React Version](https://img.shields.io/badge/React-18-blue) ![Tailwind Version](https://img.shields.io/badge/Tailwind-3.4-38bdf8)
 
-## React Compiler
+## 🌟 Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **🤖 AI-Powered Assistant:** Integrated **Google Gemini API** to power a chatbot ("Ask Sai's AI") that answers questions about my experience and skills contextually.
+* **💡 Smart Project Insights:** Dynamic AI analysis button that generates technical deep dives for specific projects on the fly.
+* **🎨 "Executive Gold" Aesthetic:** A high-contrast Black & Gold theme with starry sky animations, holographic effects, and glass-morphism.
+* **💠 Custom Branding:** Features a custom "Data Hexagon" logo and specialized UI components.
+* **📱 Fully Responsive:** Optimized sidebar navigation for desktop and an adaptive mobile menu.
+* **⚡ High Performance:** Built with Vite for instant loading and smooth 60fps animations.
+* **📊 Custom Visualizations:** Hand-coded interactive skill bars and project stat grids (no heavy charting libraries).
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* **Framework:** React.js
+* **Build Tool:** Vite
+* **Styling:** Tailwind CSS
+* **Icons:** Lucide React
+* **AI Integration:** Google Gemini API (Generative Language Client)
+* **Deployment:** GitHub Pages (`gh-pages`)
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+* Node.js installed (v16+)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/saihub404/saihub404.github.io.git](https://github.com/saihub404/saihub404.github.io.git)
+    cd saihub404.github.io
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure API Key:**
+    * Open `src/App.jsx`.
+    * Locate the `apiKey` variable near the top.
+    * **Insert your Google Gemini API key** to enable AI features.
+
+4.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+
+## 📦 Deployment
+
+This project is configured for a **GitHub User Site** (`saihub404.github.io`).
+
+1.  **Build the project:**
+    ```bash
+    npm run build
+    ```
+
+2.  **Deploy to GitHub:**
+    ```bash
+    npm run deploy
+    ```
+
+## 📬 Contact
+
+* **GitHub:** [saihub404](https://github.com/saihub404)
+* **LinkedIn:** [Sai Ganesh Voodi](https://linkedin.com/in/saiganesh223468/)
+* **Email:** saiganeshvoodi@gmail.com
+
+---
+*Designed & Built by Sai Ganesh Voodi*
