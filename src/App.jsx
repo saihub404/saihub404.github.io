@@ -22,11 +22,14 @@ import {
   Cloud,
   ArrowUpRight,
   Copy,
-  Check
+  Check,
+  FileText
 } from 'lucide-react';
 
 // --- API Configuration ---
-const apiKey = ""; // The execution environment provides this key
+// ⚠️ FOR LOCAL DEVELOPMENT: Uncomment the line below to use your .env file
+// const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+const apiKey = ""; // Keep this empty for the preview here to avoid errors
 
 // --- Gemini Helper ---
 const callGemini = async (prompt, systemInstruction = "") => {
@@ -65,7 +68,7 @@ const PROFILE = {
   title: "Data Analyst | Masters in Advanced Data Analytics",
   bio: "Results-driven Data Analyst with 4 years of experience transforming complex datasets into actionable business insights. Proven expertise in statistical modeling, predictive analytics, and data visualization using Python, SQL, and Tableau.",
   email: "saiganeshvoodi@gmail.com",
-  github: "https://github.com/saihub404", // Updated GitHub Link
+  github: "https://github.com/saihub404",
   linkedin: "https://linkedin.com/in/saiganesh223468/"
 };
 
@@ -140,7 +143,7 @@ const EXPERIENCES = [
 
 // Brand Logo Component
 const BrandLogo = () => (
-  <div className="relative w-12 h-12 group cursor-pointer">
+  <div className="relative w-10 h-10 group cursor-pointer">
     {/* Glow Effect */}
     <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-lg group-hover:bg-amber-500/40 transition-all duration-500" />
 
@@ -153,8 +156,7 @@ const BrandLogo = () => (
       />
 
       {/* Geometric Logo Mark */}
-      <svg viewBox="0 0 24 24" className="w-8 h-8 text-amber-400 relative z-10" fill="none" stroke="currentColor" strokeWidth="1.5">
-        {/* Stylized Hexagon/Node Structure */}
+      <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-400 relative z-10" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="12" cy="12" r="2" className="fill-amber-400/20 stroke-amber-400" />
       </svg>
@@ -162,7 +164,7 @@ const BrandLogo = () => (
   </div>
 );
 
-// Typing Effect Component (Optimized Speed)
+// Typing Effect Component
 const TypewriterEffect = ({ words, prefix }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
@@ -181,7 +183,6 @@ const TypewriterEffect = ({ words, prefix }) => {
       return;
     }
 
-    // Faster typing speeds
     const typingSpeed = reverse ? 30 : subIndex === words[index].length ? 1500 : 50;
 
     const timeout = setTimeout(() => {
@@ -199,7 +200,7 @@ const TypewriterEffect = ({ words, prefix }) => {
   }, [blink]);
 
   return (
-    <div className="text-lg md:text-2xl font-mono text-zinc-400 flex items-center gap-2 min-h-[3rem]">
+    <div className="text-lg md:text-xl font-mono text-zinc-400 flex items-center gap-2 min-h-[2rem]">
       <span>{prefix}</span>
       <span className="text-amber-400 font-bold border-r-2 border-amber-400/50 pr-1 animate-pulse">
         {words[index].substring(0, subIndex)}
@@ -243,7 +244,6 @@ const SkillChart = ({ skills }) => {
               </div>
             </div>
 
-            {/* Tooltip / Detail on hover */}
             <div className={`absolute left-0 -top-8 bg-black text-xs text-amber-400 px-3 py-1 rounded border border-amber-500/30 transition-opacity duration-200 pointer-events-none ${hoveredSkill === index ? 'opacity-100' : 'opacity-0'}`}>
               {skill.category}
             </div>
@@ -500,19 +500,19 @@ export default function App() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Star with twinkle animation
+  // Star with live twinkle animation (shinning and dimming with varying duration)
   const Star = ({ style }) => (
     <div
-      className="absolute bg-amber-100 rounded-full animate-twinkle shadow-[0_0_3px_rgba(255,255,255,0.8)]"
+      className="absolute bg-white rounded-full animate-live-twinkle shadow-[0_0_5px_rgba(255,255,255,0.9)]"
       style={{
-        width: `${Math.random() * 2 + 0.5}px`,
-        height: `${Math.random() * 2 + 0.5}px`,
+        width: `${Math.random() * 2 + 1}px`, // Slightly larger for visibility
+        height: `${Math.random() * 2 + 1}px`,
         ...style
       }}
     />
   );
 
-  const numStars = 120;
+  const numStars = 150;
   const stars = useMemo(() => {
     const s = [];
     for (let i = 0; i < numStars; i++) {
@@ -520,7 +520,7 @@ export default function App() {
         top: `${Math.random() * 100}%`,
         left: `${Math.random() * 100}%`,
         animationDelay: `${Math.random() * 5}s`,
-        animationDuration: `${Math.random() * 3 + 2}s`,
+        animationDuration: `${Math.random() * 4 + 2}s`, // Slower, more organic duration
       });
     }
     return s;
@@ -537,32 +537,42 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-zinc-200 font-sans selection:bg-amber-500/30 selection:text-amber-100 flex flex-col md:flex-row">
 
-      {/* Vertical Sidebar Navigation (Desktop) - REDUCED WIDTH */}
-      <aside className="hidden md:flex flex-col w-20 lg:w-56 h-screen fixed left-0 top-0 bg-zinc-950 border-r border-zinc-800 z-50 items-center lg:items-start py-8 transition-all duration-300">
-        {/* New Creative Logo */}
-        <div className="mb-12 px-0 lg:px-8 flex justify-center lg:justify-start w-full">
+      {/* Vertical Sidebar Navigation (Desktop) - FIXED SLIM WIDTH */}
+      <aside className="hidden md:flex flex-col w-16 h-screen fixed left-0 top-0 bg-zinc-950 border-r border-zinc-800 z-50 items-center py-8">
+        {/* Logo */}
+        <div className="mb-12">
           <BrandLogo />
         </div>
 
-        {/* Menu Items */}
-        <nav className="flex-1 w-full space-y-2 px-2 lg:px-4">
+        {/* Vertical Menu Items - CONSISTENT SPACING */}
+        {/* Using h-full and justify-evenly allows items to be spaced out perfectly evenly across the available height */}
+        <nav className="flex-1 w-full flex flex-col items-center justify-center gap-6">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`w-full flex items-center justify-center lg:justify-start gap-4 p-3 rounded-xl transition-all duration-200 group ${activeSection === item.id
-                  ? 'bg-amber-400 text-black font-bold shadow-[0_0_15px_rgba(245,158,11,0.3)]'
-                  : 'text-zinc-500 hover:bg-zinc-900 hover:text-amber-400'
-                }`}
+              className="group relative flex items-center justify-center h-16 w-full"
             >
-              <item.icon className={`w-6 h-6 ${activeSection === item.id ? 'text-black' : 'group-hover:scale-110 transition-transform'}`} />
-              <span className="hidden lg:block text-sm tracking-wide">{item.label}</span>
+              {/* Text - Rotated 90 degrees */}
+              <span
+                className={`text-xs tracking-widest uppercase transform -rotate-90 whitespace-nowrap transition-colors duration-300 ${activeSection === item.id
+                    ? 'text-amber-400 font-bold'
+                    : 'text-zinc-500 group-hover:text-white'
+                  }`}
+              >
+                {item.label}
+              </span>
+
+              {/* Active Indicator Dot */}
+              {activeSection === item.id && (
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-amber-400 rounded-l-full shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
+              )}
             </button>
           ))}
         </nav>
 
-        {/* Social Links Bottom */}
-        <div className="mt-auto flex flex-col lg:flex-row gap-4 items-center px-0 lg:px-8 pb-4">
+        {/* Social Links Bottom - Stacked */}
+        <div className="mt-auto flex flex-col gap-6 items-center pb-4 pt-8">
           <a href={PROFILE.github} target="_blank" rel="noreferrer" className="text-zinc-600 hover:text-white transition-colors"><Github className="w-5 h-5" /></a>
           <a href={PROFILE.linkedin} target="_blank" rel="noreferrer" className="text-zinc-600 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
         </div>
@@ -595,10 +605,10 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Content Area */}
-      <main className="flex-1 md:ml-20 lg:ml-56 relative">
+      {/* Main Content Area - Adjusted Margin for Slim Sidebar */}
+      <main className="flex-1 md:ml-16 relative">
 
-        {/* Hero Section */}
+        {/* Hero Section - REDESIGNED AESTHETICS */}
         <section id="about" className="relative min-h-screen flex flex-col justify-center items-center pt-20 md:pt-0 overflow-hidden bg-black">
           {/* Starry Sky Background */}
           <div className="absolute inset-0 z-0">
@@ -609,8 +619,8 @@ export default function App() {
 
           <div className="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center text-center">
 
-            {/* Creative Center Animation */}
-            <div className="relative w-64 h-64 mb-12 flex items-center justify-center">
+            {/* Creative Center Animation - Reduced size slightly to give more prominence to text */}
+            <div className="relative w-48 h-48 mb-12 flex items-center justify-center">
               {/* Outer Expanding Rings */}
               <div className="absolute inset-0 border border-zinc-800/50 rounded-full animate-[ping_3s_linear_infinite]" />
               <div className="absolute inset-4 border border-zinc-800/50 rounded-full animate-[ping_3s_linear_infinite_1s]" />
@@ -620,47 +630,62 @@ export default function App() {
               <div className="absolute inset-8 border-2 border-zinc-800 rounded-full border-b-amber-500 border-l-transparent -rotate-12 animate-[spin_5s_linear_infinite_reverse]" />
 
               {/* Center Core: Morphing Neural Shape */}
-              <div className="relative w-24 h-24 bg-black rounded-xl border border-amber-500/30 flex items-center justify-center overflow-hidden shadow-[0_0_30px_rgba(245,158,11,0.2)] animate-[float_6s_ease-in-out_infinite]">
+              <div className="relative w-20 h-20 bg-black rounded-xl border border-amber-500/30 flex items-center justify-center overflow-hidden shadow-[0_0_30px_rgba(245,158,11,0.2)] animate-[float_6s_ease-in-out_infinite]">
                 <div className="absolute inset-0 bg-amber-500/10 backdrop-blur-md" />
                 {/* Sacred Geometry / Tech Core */}
-                <div className="w-12 h-12 border border-amber-400 rotate-45 absolute animate-[spin_10s_linear_infinite]" />
-                <div className="w-12 h-12 border border-amber-400 rotate-12 absolute animate-[spin_10s_linear_infinite_reverse]" />
-                <div className="w-4 h-4 bg-amber-400 rounded-sm shadow-[0_0_15px_rgba(245,158,11,0.8)] animate-pulse" />
+                <div className="w-10 h-10 border border-amber-400 rotate-45 absolute animate-[spin_10s_linear_infinite]" />
+                <div className="w-10 h-10 border border-amber-400 rotate-12 absolute animate-[spin_10s_linear_infinite_reverse]" />
+                <div className="w-3 h-3 bg-amber-400 rounded-sm shadow-[0_0_15px_rgba(245,158,11,0.8)] animate-pulse" />
               </div>
             </div>
 
-            {/* Introduction & Typing Effect */}
-            <div className="space-y-6 max-w-3xl mx-auto">
+            {/* Introduction & Typing Effect - New Aesthetic Layout */}
+            <div className="space-y-8 max-w-4xl mx-auto">
+
               <div className="flex flex-col items-center justify-center gap-2">
-                <h2 className="text-4xl md:text-5xl font-extrabold text-white">Hi, I'm {PROFILE.name}.</h2>
+                <h2 className="text-lg md:text-xl text-zinc-400 tracking-widest uppercase font-medium">Hi, I'm {PROFILE.name}</h2>
                 <TypewriterEffect
                   prefix="I am a"
                   words={["Data Analyst.", "Visual Storyteller.", "Problem Solver.", "Masters Student."]}
                 />
               </div>
 
-              <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tight mt-4">
+              {/* Impactful Main Headline */}
+              <h1 className="text-5xl md:text-7xl font-black text-white leading-[1.1] tracking-tight">
                 Turning Data into <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 drop-shadow-[0_0_10px_rgba(251,191,36,0.3)]">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 drop-shadow-[0_0_25px_rgba(251,191,36,0.4)]">
                   Strategic Decisions.
                 </span>
               </h1>
 
-              <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-                {PROFILE.bio}
-              </p>
+              {/* Aesthetic Bio Box - Glassmorphism */}
+              <div className="max-w-3xl mx-auto mt-8 p-6 md:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/50 backdrop-blur-sm relative overflow-hidden group hover:border-amber-500/20 transition-colors duration-500">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]" />
+                <p className="text-lg md:text-xl text-zinc-300 leading-relaxed font-light">
+                  {PROFILE.bio}
+                </p>
+              </div>
 
-              <div className="flex flex-wrap justify-center gap-4 pt-8">
+              {/* Call to Action & Resume Button - CHANGED TO <a> TAG */}
+              <div className="flex justify-center gap-6 pt-8">
                 <button
                   onClick={() => scrollToSection('projects')}
-                  className="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-amber-50 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                  className="group relative px-8 py-3 bg-amber-400 text-black font-bold text-lg rounded-full shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] transition-all hover:scale-105 active:scale-95 flex items-center gap-3 overflow-hidden"
                 >
-                  View Projects <ChevronRight className="w-4 h-4" />
+                  <span className="relative z-10">View Projects</span>
+                  <ChevronRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-white/30 translate-y-full group-hover:translate-y-0 transition-transform duration-300 skew-y-12" />
                 </button>
-                <button className="px-8 py-4 bg-transparent text-white font-bold rounded-xl border border-zinc-700 hover:border-amber-500 transition-all flex items-center gap-2 group hover:bg-zinc-900">
-                  <Download className="w-4 h-4 group-hover:text-amber-400 transition-colors" />
-                  Download Resume
-                </button>
+
+                <a
+                  href="/resume.pdf" // User needs to place 'resume.pdf' in the 'public' folder
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative px-8 py-3 bg-zinc-900 text-white font-bold text-lg rounded-full border border-zinc-700 hover:border-amber-400/50 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 overflow-hidden"
+                >
+                  <span className="relative z-10 group-hover:text-amber-400 transition-colors">Resume</span>
+                  <FileText className="w-5 h-5 relative z-10 text-zinc-400 group-hover:text-amber-400 transition-colors" />
+                </a>
               </div>
             </div>
 
@@ -789,6 +814,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-bl from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="relative z-10 flex flex-col items-center text-center">
                   <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    {/* Use LinkedIn icon */}
                     <Linkedin className="w-8 h-8 text-zinc-300 group-hover:text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">LinkedIn</h3>
@@ -822,9 +848,11 @@ export default function App() {
         @keyframes spin {
           100% { transform: rotate(360deg); }
         }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; transform: scale(0.8); }
-          50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+        /* NEW LIVE TWINKLE ANIMATION */
+        @keyframes live-twinkle {
+          0% { opacity: 0.1; transform: scale(0.5); }
+          50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 8px rgba(255, 255, 255, 0.8); }
+          100% { opacity: 0.1; transform: scale(0.5); }
         }
         @keyframes float {
           0%, 100% { transform: translateY(0); }
