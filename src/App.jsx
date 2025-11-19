@@ -699,9 +699,6 @@ export default function App() {
         {/* Skills Section */}
         <section id="skills" className="py-12 bg-zinc-950 border-y border-zinc-900">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">My Technical Foundation</h2>
-            </div>
 
             {/* New Multi-Row Marquee Skills - Imitating Reference Style */}
             <div className="flex flex-col gap-6 relative">
