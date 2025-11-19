@@ -540,24 +540,25 @@ export default function App() {
       {/* Vertical Sidebar Navigation (Desktop) - FIXED SLIM WIDTH */}
       <aside className="hidden md:flex flex-col w-16 h-screen fixed left-0 top-0 bg-zinc-950 border-r border-zinc-800 z-50 items-center py-8">
         {/* Logo */}
-        <div className="mb-12">
+        <div className="mb-4">
           <BrandLogo />
         </div>
 
-        {/* Vertical Menu Items - CONSISTENT SPACING */}
-        {/* Using h-full and justify-evenly allows items to be spaced out perfectly evenly across the available height */}
+        {/* Vertical Menu Items - REDUCED SPACING */}
+        {/* Use justify-center with gap-8 to bring items closer together while centered */}
         <nav className="flex-1 w-full flex flex-col items-center justify-center gap-6">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="group relative flex items-center justify-center h-16 w-full"
+              // Use writing-mode: vertical-lr to handle text layout correctly without messy transforms
+              className="group relative flex items-center justify-center w-full transition-all"
             >
-              {/* Text - Rotated 90 degrees */}
+              {/* Text - Vertical Writing Mode + 180 rotation to read bottom-up */}
               <span
-                className={`text-xs tracking-widest uppercase transform -rotate-90 whitespace-nowrap transition-colors duration-300 ${activeSection === item.id
-                    ? 'text-amber-400 font-bold'
-                    : 'text-zinc-500 group-hover:text-white'
+                className={`text-sm font-medium tracking-widest uppercase [writing-mode:vertical-lr] rotate-180 whitespace-nowrap transition-colors duration-300 ${activeSection === item.id
+                  ? 'text-amber-400 font-bold'
+                  : 'text-zinc-500 group-hover:text-white'
                   }`}
               >
                 {item.label}
@@ -572,7 +573,7 @@ export default function App() {
         </nav>
 
         {/* Social Links Bottom - Stacked */}
-        <div className="mt-auto flex flex-col gap-6 items-center pb-4 pt-8">
+        <div className="mt-auto flex flex-col gap-6 items-center pb-4 pt-4">
           <a href={PROFILE.github} target="_blank" rel="noreferrer" className="text-zinc-600 hover:text-white transition-colors"><Github className="w-5 h-5" /></a>
           <a href={PROFILE.linkedin} target="_blank" rel="noreferrer" className="text-zinc-600 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
         </div>
@@ -742,8 +743,8 @@ export default function App() {
                     key={cat}
                     onClick={() => setActiveFilter(cat)}
                     className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${activeFilter === cat
-                        ? 'bg-amber-400 text-black shadow-[0_0_15px_rgba(251,191,36,0.4)]'
-                        : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 border border-zinc-800'
+                      ? 'bg-amber-400 text-black shadow-[0_0_15px_rgba(251,191,36,0.4)]'
+                      : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 border border-zinc-800'
                       }`}
                   >
                     {cat}
