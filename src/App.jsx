@@ -167,7 +167,7 @@ const EXPERIENCES = [
 
 // Brand Logo Component
 const BrandLogo = () => (
-  <div className="relative w-10 h-10 group cursor-pointer">
+  <div className="relative w-12 h-12 group cursor-pointer">
     {/* Glow Effect */}
     <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-lg group-hover:bg-amber-500/40 transition-all duration-500" />
 
