@@ -167,7 +167,7 @@ const EXPERIENCES = [
 
 // Brand Logo Component
 const BrandLogo = () => (
-  <div className="relative w-12 h-12 group cursor-pointer">
+  <div className="relative w-18 h-18 group cursor-pointer">
     {/* Glow Effect */}
     <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-lg group-hover:bg-amber-500/40 transition-all duration-500" />
 
@@ -176,7 +176,7 @@ const BrandLogo = () => (
       <img
         src="/logo.png" // Assumes you renamed and moved the uploaded file to the public folder
         alt="SG Logo"
-        className="w-full h-full object-contain filter drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]"
+        className="w-full h-full object-contain filter drop-shadow-[0_0_4px_rgba(245,158,11,0.5)]"
       />
     </div>
 
