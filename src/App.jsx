@@ -171,29 +171,29 @@ const BrandLogo = () => (
     {/* Glow Effect */}
     <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-lg group-hover:bg-amber-500/40 transition-all duration-500" />
 
-    {/* Logo Image Container */}
+    {/* Logo Image Container
     <div className="relative w-full h-full flex items-center justify-center transition-all duration-300 group-hover:scale-110">
       <img
         src="/logo.png" // Assumes you renamed and moved the uploaded file to the public folder
         alt="SG Logo"
         className="w-full h-full object-contain filter drop-shadow-[0_0_4px_rgba(245,158,11,0.5)]"
       />
-    </div>
+    </div> */}
 
     {/* Main Container */}
-    {/* <div className="relative w-full h-full bg-zinc-900 border border-zinc-700 group-hover:border-amber-500/50 rounded-xl flex items-center justify-center overflow-hidden transition-all duration-300 shadow-xl"> */}
+    <div className="relative w-full h-full bg-zinc-900 border border-zinc-700 group-hover:border-amber-500/50 rounded-xl flex items-center justify-center overflow-hidden transition-all duration-300 shadow-xl">
 
-    {/* Internal Tech Grid Background */}
-    {/* <div className="absolute inset-0 opacity-20"
+      {/* Internal Tech Grid Background */}
+      <div className="absolute inset-0 opacity-20"
         style={{ backgroundImage: 'radial-gradient(#fbbf24 1px, transparent 1px)', backgroundSize: '4px 4px' }}
-      /> */}
+      />
 
-    {/* Geometric Logo Mark */}
-    {/* <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-400 relative z-10" fill="none" stroke="currentColor" strokeWidth="1.5">
+      {/* Geometric Logo Mark */}
+      <svg viewBox="0 0 24 24" className="w-6 h-6 text-amber-400 relative z-10" fill="none" stroke="currentColor" strokeWidth="1.5">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="12" cy="12" r="2" className="fill-amber-400/20 stroke-amber-400" />
       </svg>
-    </div> */}
+    </div>
   </div>
 );
 
